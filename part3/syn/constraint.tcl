@@ -1,4 +1,11 @@
-#create a clock with given constrained clock period
-#create input delay on all inputs except clock
-#create output delay on all outputs
-#set given load capacitance on all output pins
+# Clock period = 0.5 ns
+create_clock -period 0.5 [get_ports clk]
+
+# Input delay = 0.1 ns
+set_input_delay 0.1 -clock clk [remove_from_collection [all_inputs] [get_ports clk]]
+
+# Output delay = 0.1 ns
+set_output_delay 0.1 -clock clk [all_outputs]
+
+# Load capacitance = 5 fF
+set_load 5 [all_outputs]
