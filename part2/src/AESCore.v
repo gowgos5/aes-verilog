@@ -15,7 +15,7 @@ module AESCore(
     input   enbKS,
 
     // to testbench
-    output reg [127:0] cipher_text = 128'b0;
+    output reg [127:0] cipher_text = 128'b0
 );
 
 wire [127:0] inKS;
@@ -25,7 +25,7 @@ wire [127:0] outSB;
 wire [127:0] outSR;
 wire [127:0] outMC;
 wire [127:0] outAR;
-reg [127:0] round_key = 128'b0;
+reg [127:0] round_key;
 
 always @ (posedge clk or negedge rstn)
 begin

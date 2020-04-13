@@ -6,7 +6,7 @@ module AEScntx(
 
     // to AEScore
     output  accept,
-    output reg [3:0] rndNo = 4'b0,
+    output reg [3:0] rndNo,
     output  enbSB,
     output  enbSR,
     output  enbMC,
@@ -14,7 +14,7 @@ module AEScntx(
     output  enbKS,
 
     // to testbench
-    output reg done = 1'b0,
+    output reg done,
     output  [9:0] completed_round
 );
 
