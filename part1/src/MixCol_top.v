@@ -12,8 +12,8 @@ generate
     for (i=0; i<4; i=i+1)
     begin: GEN_MULT
         matrix_mult mult(
-            .ip(ip[i*8+:8]),
-            .op(out[i*8+:8])
+            .ip(ip[32*i +: 32]),
+            .op(out[32*i +: 32])
         );
     end
 endgenerate

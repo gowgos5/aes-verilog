@@ -5,7 +5,7 @@ module KeySchedule_top(
     output  [127:0] op_key
 );
 
-wire [31:0] rcon;
+reg [31:0] rcon;
 wire [31:0] rot_word;
 wire [31:0] sub_word;
 wire [31:0] xor_word[3:0];
@@ -22,7 +22,22 @@ assign xor_word[0] = ip_key[31:0] ^ xor_word[1];
 assign op_key = enable ? { xor_word[3], xor_word[2], xor_word[1], xor_word[0] } : ip_key;
 
 /* RCON */
-aes_rcon rcon(.rndNo(rndNo), .rcon(rcon));
+always @ (rndNo)
+begin
+    case (rndNo)
+        4'h1: rcon=32'h01000000;
+        4'h2: rcon=32'h02000000;
+        4'h3: rcon=32'h04000000;
+        4'h4: rcon=32'h08000000;
+        4'h5: rcon=32'h10000000;
+        4'h6: rcon=32'h20000000;
+        4'h7: rcon=32'h40000000;
+        4'h8: rcon=32'h80000000;
+        4'h9: rcon=32'h1b000000;
+        4'ha: rcon=32'h36000000;
+        default: rcon=32'h00000000;
+    endcase
+end
 
 /* 2. SubBytes */
 genvar i;
@@ -30,8 +45,8 @@ generate
     for (i=0; i<4; i=i+1)
     begin: GEN_SBOX
         aes_sbox sbox(
-            .ip(ip[(rot_word*8)+:8]),
-            .op(out[(sub_word*8)+:8])
+            .ip(rot_word[8*i +: 8]),
+            .op(sub_word[8*i +: 8])
         );
     end
 endgenerate
