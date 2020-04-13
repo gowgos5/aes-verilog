@@ -18,7 +18,7 @@ module AEScntx(
     output  [9:0] completed_round
 );
 
-always @ (posedge clk)
+always @ (posedge clk or negedge rstn)
 begin
     if (~rstn)
     begin
