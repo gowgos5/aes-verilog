@@ -31,8 +31,8 @@ always @ (posedge clk)
 begin
     if (~rstn)
     begin
-        round_key <= 128'h0;
-        cipher_text <= 128'h0;
+        round_key <= 128'b0;
+        cipher_text <= 128'b0;
     end
     else
     begin

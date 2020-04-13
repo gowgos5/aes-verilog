@@ -26,4 +26,6 @@ assign out[23:16] = ip[119:112];
 assign out[15:8] = ip[79:72];
 assign out[7:0] = ip[39:32];
 
+assign op = enable ? out : ip;
+
 endmodule
