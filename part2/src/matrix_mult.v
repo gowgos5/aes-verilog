@@ -1,6 +1,6 @@
 module matrix_mult(
-input  [31:0] ip,
-output [31:0] op
+    input   [31:0] ip,
+    output  [31:0] op
 );
 
 wire [7:0] b0;
@@ -16,7 +16,6 @@ assign a0 = ip[31:24];
 assign a1 = ip[23:16];
 assign a2 = ip[15:8];
 assign a3 = ip[7:0];
-
 
 assign b0 = (a0[7]==1'b1)?((a0<<1)^(8'h1b)):(a0<<1);
 assign b1 = (a1[7]==1'b1)?((a1<<1)^(8'h1b)):(a1<<1);
