@@ -5,7 +5,7 @@ module KeySchedule_top(
     output  [127:0] op_key
 );
 
-reg [31:0] rcon = 32'b0;
+reg [31:0] rcon;
 wire [31:0] rot_word;
 wire [31:0] sub_word;
 wire [31:0] xor_word[3:0];

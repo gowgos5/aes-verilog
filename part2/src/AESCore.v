@@ -15,7 +15,7 @@ module AESCore(
     input   enbKS,
 
     // to testbench
-    output reg [127:0] cipher_text = 128'b0
+    output reg [127:0] cipher_text
 );
 
 wire [127:0] inKS;
