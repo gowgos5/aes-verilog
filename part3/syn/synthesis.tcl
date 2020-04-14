@@ -11,7 +11,7 @@ source constraint.tcl
 compile
 
 # retime design
-optimize_registers
+optimize_registers -minimum_period_only -check_design -verbose -print_critical_loop -clock clk
 
 # report critical path
 redirect -tee report_timing_setup.txt {report_timing -delay max}
