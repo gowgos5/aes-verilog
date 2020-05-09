@@ -1,15 +1,16 @@
+// Top module for connecting the AES controller with N AES cores.
 module AES_top #(N=4)(
     // from testbench
-    input clk,
-    input start,
-    input rstn,
-    input [128*N-1:0] plain_text,
-    input [128*N-1:0] cipher_key,
+    input   clk,
+    input   start,
+    input   rstn,
+    input   [128*N-1:0] plain_text,
+    input   [128*N-1:0] cipher_key,
 
     // to testbench
-    output done,
-    output [9:0] completed_round,
-    output [128*N-1:0] cipher_text
+    output  done,
+    output  [9:0] completed_round,
+    output  [128*N-1:0] cipher_text
 );
 
 wire accept;
@@ -35,6 +36,7 @@ AEScntx aes_cnt (
     .completed_round(completed_round)
 );
 
+/* Instantiate N aes_core units */
 genvar i;
 generate
     for (i=0; i<N; i=i+1)

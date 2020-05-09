@@ -1,3 +1,4 @@
+// Performs AES operations
 module AESCore(
     // from testbench
     input   clk,
@@ -27,20 +28,24 @@ wire [127:0] outMC;
 wire [127:0] outAR;
 reg [127:0] round_key;
 
+// Asynchronous reset
 always @ (posedge clk or negedge rstn)
 begin
     if (~rstn)
     begin
+        // Reset all registers
         round_key <= 128'b0;
         cipher_text <= 128'b0;
     end
     else
     begin
-        round_key <= outKS;
-        cipher_text <= outAR;
+        round_key <= outKS;     // Save output of KeySchedule to generate round keys
+        cipher_text <= outAR;   // Save output of AddRoundKey for updating cipher text
     end
 end
 
+// Round 0: plain text / cipher key
+// Round 1 onwards: intermediate cipher text / round key
 assign inSB = accept ? plain_text : cipher_text;
 assign inKS = accept ? cipher_key : round_key;
 

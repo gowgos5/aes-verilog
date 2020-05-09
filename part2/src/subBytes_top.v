@@ -1,3 +1,5 @@
+// In the SubBytes step, each byte in the state array is replaced with a SubByte element using
+// an 8-bit substitution box. This operation provides non-linearity in the cipher.
 module subBytes_top(
     input   [127:0] ip,
     input   enable,
@@ -5,6 +7,8 @@ module subBytes_top(
 );
 
 wire [127:0] out;
+
+assign op = enable ? out : ip;
 
 /* Instantiate 16 aes_sbox units */
 genvar i;
@@ -17,7 +21,5 @@ generate
         );
     end
 endgenerate
-
-assign op = enable ? out : ip;
 
 endmodule
