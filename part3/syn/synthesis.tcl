@@ -14,8 +14,8 @@ compile
 optimize_registers -check_design -verbose -print_critical_loop
 
 # Report timings
-redirect -tee report_timing_setup.txt {report_timing -delay max}
-redirect -tee report_timing_hold.txt {report_timing -delay min}
+redirect -tee report_timing_setup.txt {report_timing -delay max -significant_digits 3}
+redirect -tee report_timing_hold.txt {report_timing -delay min -significant_digits 3}
 
 # Report area
 redirect -tee report_area.txt {report_area}
