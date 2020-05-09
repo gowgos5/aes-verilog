@@ -1,3 +1,4 @@
+// Top module for connecting the AES controller with the AES core.
 module AES_top(
     // from testbench
     input   clk,
