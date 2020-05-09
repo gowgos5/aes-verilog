@@ -49,32 +49,32 @@ end
 assign inSB = accept ? plain_text : cipher_text;
 assign inKS = accept ? cipher_key : round_key;
 
-KeySchedule_top key_schedule (
+KeySchedule_top key_schedule(
     .ip_key(inKS),
     .enable(enbKS),
     .rndNo(rndNo),
     .op_key(outKS)
 );
 
-subBytes_top sub_bytes (
+subBytes_top sub_bytes(
     .ip(inSB),
     .enable(enbSB),
     .op(outSB)
 );
 
-shiftRows_top shift_rows (
+shiftRows_top shift_rows(
     .ip(outSB),
     .enable(enbSR),
     .op(outSR)
 );
 
-MixCol_top mix_col (
+MixCol_top mix_col(
     .ip(outSR),
     .enable(enbMC),
     .op(outMC)
 );
 
-AddRndKey_top add_rndkey (
+AddRndKey_top add_rndkey(
     .ip(outMC),
     .ip_key(outKS),
     .enable(enbAR),

@@ -1,21 +1,24 @@
-# analyse HDL source files
-analyze -format verilog {../src/aes_sbox.v ../src/subBytes_top.v ../src/shiftRows_top.v ../src/matrix_mult.v ../src/MixCol_top.v ../src/AddRndKey_top.v ../src/KeySchedule_top.v ../src/AESCore.v ../src/AEScntx.v ../src/AES_top.v}
+# Analyse HDL source files
+analyze -format verilog -autoread {../src}
 
-# elaborate top
-elaborate AES_top -architecture verilog
+# Elaborate top module
+elaborate AES_top
 
-# source constraint file
+# Apply constraints
 source constraint.tcl
 
-# compile top module
+# Perform synthesis
 compile
 
-# retime design
-optimize_registers -minimum_period_only -check_design -verbose -print_critical_loop -clock clk
+# Perform retiming
+optimize_registers -check_design -verbose -print_critical_loop
 
-# report critical path
+# Report timings
 redirect -tee report_timing_setup.txt {report_timing -delay max}
 redirect -tee report_timing_hold.txt {report_timing -delay min}
 
-# report area
+# Report area
 redirect -tee report_area.txt {report_area}
+
+# Display a summary of all violations in the current design
+report_constraint -all_violators

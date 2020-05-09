@@ -1,3 +1,4 @@
+// Top module for connecting the AES controller with the AES core.
 module AES_top #(N=4)(
     // from testbench
     input   clk,
@@ -20,7 +21,7 @@ wire enbMC;
 wire enbAR;
 wire enbKS;
 
-AEScntx #(N) aes_cnt (
+AEScntx #(N) aes_cnt(
     .clk(clk),
     .start(start),
     .rstn(rstn),
@@ -35,7 +36,7 @@ AEScntx #(N) aes_cnt (
     .completed_round(completed_round)
 );
 
-AESCore #(N) aes_core (
+AESCore #(N) aes_core(
     .clk(clk),
     .rstn(rstn),
     .plain_text(plain_text),

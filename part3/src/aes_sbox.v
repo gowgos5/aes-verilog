@@ -1,3 +1,4 @@
+// A 8x8 S-box implemented as a lookup table with 2^8 words of 8 bits each.
 module aes_sbox(ip,op);
 	input	[7:0]	ip;
 	output	[7:0]	op;

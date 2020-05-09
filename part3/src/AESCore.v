@@ -1,3 +1,4 @@
+// Performs AES operations
 module AESCore #(N=4)(
     // from testbench
     input   clk,
@@ -30,20 +31,22 @@ reg [127:0] reg_round_key [N-1:0];
 reg [127:0] reg_cipher_text [N-1:0];
 
 integer i;
+// Asynchronous reset
 always @ (posedge clk or negedge rstn)
 begin
     if (~rstn)
     begin
         for (i=0; i<N; i=i+1)
         begin
+            // Clear all registers
             reg_round_key[i] <= 128'h0;
             reg_cipher_text[i] <= 128'h0;
         end
     end
     else
     begin
-        reg_round_key[0] <= outKS;
-        reg_cipher_text[0] <= outAR;
+        reg_round_key[0] <= outKS;      // Save output of KeySchedule to generate round keys
+        reg_cipher_text[0] <= outAR;    // Save output of AddRoundKey for updating cipher text
 
         for (i=1; i<N; i=i+1)
         begin
@@ -53,36 +56,38 @@ begin
     end
 end
 
+// Round 0: plain text / cipher key
+// Round 1 onwards: intermediate cipher text / round key
 assign inSB = accept ? plain_text : reg_cipher_text[N-1];
 assign inKS = accept ? cipher_key : reg_round_key[N-1];
 assign cipher_text = reg_cipher_text[N-1];
 
-KeySchedule_top key_schedule (
+KeySchedule_top key_schedule(
     .ip_key(inKS),
     .enable(enbKS),
     .rndNo(rndNo),
     .op_key(outKS)
 );
 
-subBytes_top sub_bytes (
+subBytes_top sub_bytes(
     .ip(inSB),
     .enable(enbSB),
     .op(outSB)
 );
 
-shiftRows_top shift_rows (
+shiftRows_top shift_rows(
     .ip(outSB),
     .enable(enbSR),
     .op(outSR)
 );
 
-MixCol_top mix_col (
+MixCol_top mix_col(
     .ip(outSR),
     .enable(enbMC),
     .op(outMC)
 );
 
-AddRndKey_top add_rndkey (
+AddRndKey_top add_rndkey(
     .ip(outMC),
     .ip_key(outKS),
     .enable(enbAR),
